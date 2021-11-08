@@ -10,6 +10,8 @@
 
 ## Specifics
 
+### [CRUD](CRUD.md)
+
 ### [Data Modelling](DataModelling.md)
 
 #### [Shell](Shell.md)
