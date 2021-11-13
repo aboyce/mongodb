@@ -12,6 +12,8 @@
 
 ### [CRUD](CRUD.md)
 
+### [Querying](Querying.md)
+
 ### [Data Modelling](DataModelling.md)
 
 #### [Shell](Shell.md)
