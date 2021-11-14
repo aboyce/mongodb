@@ -62,6 +62,22 @@ You can use update operators to make life easier.
 
 - `$bit` performs bitwise `AND`, `OR`, and `XOR` updates of integer values
 
+#### Upsert
+
+Everything in MQL that is used to locate a document in a collection can also be used to modify the document.
+
+```
+db.collection.updateOne({ < query to locate > }, { < update > })
+```
+
+Upsert is a hybrid of update and insert but should only be used when it is needed. By default it is set to `false`.
+
+```
+db.collection.updateOne({ < query to locate > }, { < update > }, { upsert: true })
+```
+
+If there is a match, it will be updated, if there is not a match, it will be inserted.
+
 ### Deleting
 
 The only time you can be sure you are using `deleteOne` correctly is if you are filtering on `_id` as anything else could return an unexpected document to delete.
