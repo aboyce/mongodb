@@ -14,6 +14,8 @@
 
 ### [Querying](Querying.md)
 
+### [Aggregation Framework](AggregationFramework.md)
+
 ### [Data Modelling](DataModelling.md)
 
 #### [Shell](Shell.md)
