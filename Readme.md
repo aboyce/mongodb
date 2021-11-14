@@ -14,6 +14,8 @@
 
 ### [Querying](Querying.md)
 
+### [Indexes](Indexes.md)
+
 ### [Aggregation Framework](AggregationFramework.md)
 
 ### [Data Modelling](DataModelling.md)
