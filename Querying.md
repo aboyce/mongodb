@@ -72,3 +72,15 @@ For example:
 ```
 { "field_a": { "$size": 2, "$all": [ "value_1", "value_2" ] } }
 ```
+
+### Projection Syntax
+
+You can provide a projection object as a second argument to the query, you use `1` to include the field and `0` to exclude the field (use only 1s or 0s).
+
+You cannot mix 0s and 1s in a single projection, unless you want to exclude the `_id`. If you use 1s, you only get the fields you specify along with the `_id` field. If you use 0s you get all the fields except the ones you excluded.
+
+### Querying Arrays and Sub-Documents
+
+You can use `$elemMatch` to query arrays within documents.
+
+MQL uses dot-notation to specify the address of nested elements in a document, you can go as deep as required into the nested documents. If using with arrays you can specify the position of the array you want to query.
