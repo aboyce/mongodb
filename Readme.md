@@ -24,4 +24,6 @@
 
 #### [Logging](Logging.md)
 
+#### [Profiling](Profiling.md)
+
 #### [Monitoring and Debugging](MonitoringAndDebugging.md)
