@@ -22,4 +22,6 @@
 
 #### [Shell](Shell.md)
 
+#### [Logging](Logging.md)
+
 #### [Monitoring and Debugging](MonitoringAndDebugging.md)
