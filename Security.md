@@ -26,7 +26,46 @@ Robust authentication protocol.
 
 MongoDB uses RBAC for authorisation. Each user has one or more roles, each role has one of more privileges, a privilege represents a group of actions and the resources that those actions apply to.
 
+A resource in terms of RBAC can be defined as:
+
+- Specific database and a specific collection
+- All databases and all collections
+- Specific database and any collection
+- Cluster resource
+
+Roles can inherit from other roles.
+
+You can restrict roles with network authentication restrictions, specifying which roles can access from which addresses.
+
 At the very minimum, you should always configure SCRAM-SHA-1 with a single administrative user protected by a strong password.
+
+For simplicity, you should `use admin` and add the users in that database but give the user permissions on different databases, that way the `admin` database can be the single point for authentication.
+
+#### Built in Roles
+
+- Database user (application users)
+  - `read`
+  - `readWrite`
+  - `readAnyDatabase` (cross database role)
+  - `readWriteAnyDatabase` (cross database role)
+- Database administrator
+  - `dbAdmin`
+  - `dbAdminAnyDatabase` (cross database role)
+  - `userAdmin`
+  - `userAdminAnyDatabase` (cross database role)
+  - `dbOwner`
+- Cluster administrator
+  - `clusterAdmin`
+  - `clusterManager`
+  - `clusterMonitor`
+  - `hostManager`
+- Backup/restore
+  - `backup`
+  - `restore`
+- Super user
+  - `root` (cross database role)
+
+The `dbOwner` role can preform any administrative action on the database. This role combines the privileges granted by the `readWrite`, `dbAdmin` and `userAdmin` roles.
 
 #### Localhost Exception
 
