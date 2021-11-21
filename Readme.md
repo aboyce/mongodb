@@ -8,6 +8,8 @@
 
 ### [Sharding](Sharding.md)
 
+### [Data Modelling](DataModelling.md)
+
 ## Specifics
 
 ### [CRUD](CRUD.md)
@@ -17,8 +19,6 @@
 ### [Indexes](Indexes.md)
 
 ### [Aggregation Framework](AggregationFramework.md)
-
-### [Data Modelling](DataModelling.md)
 
 #### [Shell](Shell.md)
 
