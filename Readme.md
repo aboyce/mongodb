@@ -8,6 +8,8 @@
 
 ### [Sharding](Sharding.md)
 
+### [Replication](Replication.md)
+
 ### [Data Modelling](DataModelling.md)
 
 ## Specifics
