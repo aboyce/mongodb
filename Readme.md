@@ -31,5 +31,3 @@
 ### [Monitoring and Debugging](MonitoringAndDebugging.md)
 
 ### [Security](Security.md)
-
-#### [Security](Security.md)
