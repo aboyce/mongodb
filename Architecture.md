@@ -48,3 +48,13 @@ An organised store of documents in MongoDB, usually with common fields between d
 - Efficient; encoding and decoding data into/from BSON in the drivers can be done quickly (due to the use of C data types)
 - MongoDB drivers send and receive data as BSON, when data is written to MongoDB it is stored as BSON
 - The drivers then map BSON to an appropriate data type for the language
+
+### Local Database
+
+This is local to the node and is not replicated, you can edit it with the correct permissions but you should avoid touching it as it contains important information for MongoDB to operate.
+
+`oplog.rs` is central to our replication mechanism.
+
+The size of our oplog will impact the replication window, if a node goes offline it can check with the other nodes which has the last update that it made in its oplog, if it exists, it will just replay the following actions and be back up to date. If the node has been offline for too long, or too much has changed resulting in the other oplogs to have moved on, the node will be in recovery mode.
+
+You can change the oplog size, but will default at 5% of the available disk.
