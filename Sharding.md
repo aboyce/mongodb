@@ -6,9 +6,51 @@ MongoDB supports horizontal scaling through sharding, it shards at the collectio
 
 A sharded cluster consists of:
 
-- `shard`; a subset of the sharded data, each shard can be deployed as a replica set
-- `mongos`; acts as a query router, an interface between client applications and the sharded cluster
-- `config servers`; store metadata and configuration for the cluster
+- Shard
+- Config servers
+- `mongos`
+
+#### Shard
+
+A subset of the sharded data, each shard can/should be deployed as a replica set.
+
+There is also a primary shard, each database will be assigned a primary shard and all none sharded collections on that database will remain on that shard as not all collections on a sharded cluster need to be distributed. You can change the primary shard in a database if required.
+
+#### `mongos`
+
+Acts as a query router, an interface between client applications and the sharded cluster. Clients now connect to `mongos` rather than individually and we can have many instances to service applications across the sharded cluster.
+
+It uses the metadata for what information is stored in each shard to route queries, this metadata is stored on the config server.
+
+If a query comes in that can spread multiple shards, it has to be sent to all the shards, the returned data will be returned to `mongos` and it will perform a `SHARD_MERGE` of the aggregated data or on a randomly chosen shard in the cluster.
+
+`mongos` inherits users from the config servers.
+
+#### Config Servers
+
+Store metadata and configuration for the cluster, this data is required to be highly available and required frequently by `monogos`. To ensure availability, we deploy a Config Server Replica Set.
+
+These keep track of mappings from which data is available from with which area of the shard, this can simply be letters A-M are on shard 0 for example. They are also responsible for moving the data around, if the section of names A-M is too large compared to the other shards, it will change the mappings/locations to spread the data out more evenly. THey would update the metadata locally and then send this information out to the correct shards.
+
+##### Config Database
+
+You should not write any data directly to it, it is used and maintained internally by MongoDB. You can use `sh.status()` to get useful data about the sharded cluster, a lot of this is also available in the config database.
+
+There is some useful information in:
+
+- `db.databases.find().pretty()`
+- `db.collections.find().pretty()`
+- `db.shards.find().pretty()`
+- `db.chunks.find().pretty()`
+- `db.mongos.find().pretty()`
+
+### When to Shard
+
+Things to check before sharding would be:
+
+- Is it still economically viable to vertically scale up (would it solve bottlenecks, are there larger nodes available at a sensible price?)
+- Going bigger is not always easier, larger backups, larger indexes etc. all add complexity to just making things bigger. A general rule is that individual servers should contain 2TB - 5TB of data, more than that makes it too time consuming to operate.
+- Specific workloads benefit from horizontal scaling, aggregations and geographical concerns may have more impact than just a bigger node. Some aggregations can be parallelised and would be better running on a sharded cluster
 
 ### Shard Keys
 
