@@ -1,0 +1,73 @@
+/**
+  M121: The MongoDB Aggregation Framework
+
+  Available at (readonly):
+    - "mongodb://m121:aggregations@cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-01-jxeqq.mongodb.net:27017,cluster0-shard-00-02-jxeqq.mongodb.net:27017/aggregations?replicaSet=Cluster0-shard-0"
+ */
+
+const validateLab1 = pipeline => {
+  let aggregations = db.getSiblingDB("aggregations")
+  if (!pipeline) {
+    print("var pipeline isn't properly set up!")
+  } else {
+    try {
+      var result = aggregations.movies.aggregate(pipeline).toArray().length
+      let sentinel = result
+      let data = 0
+      while (result != 1) {
+        data++
+        result = result % 2 === 0 ? result / 2 : result * 3 + 1
+      }
+      if (sentinel === 23) {
+        print("Answer is", data)
+      } else {
+        print("You aren't returning the correct number of documents")
+      }
+    } catch (e) {
+      print(e.message)
+    }
+  }
+}
+
+const validateLab2 = pipeline => {
+  let aggregations = db.getSiblingDB("aggregations")
+  if (!pipeline) {
+    print("var pipeline isn't properly set up!")
+  } else {
+    try {
+      let resultsExplain = aggregations.movies.aggregate(pipeline, {
+        explain: true
+      })
+      let result = aggregations.movies.aggregate(pipeline).toArray().length
+      let data = 0
+      while (result != 1) {
+        data++
+        result = result % 2 === 0 ? result / 2 : result * 3 + 1
+      }
+      let { _id, title, rated } = resultsExplain.stages.pop()["$project"]
+      return title && rated && !_id
+        ? print("Answer is", data)
+        : print("Your $project stage doesn't seem correct")
+    } catch (e) {
+      print(e.message)
+    }
+  }
+}
+
+use('aggregations')
+
+const pipeline = [
+  {
+    $match: {
+      "imdb.rating": { $gte: 7 },
+      // "genres": { $nin: ["Crime", "Horror"] },
+      // "genres": { $in: ["PG", "G"] },
+      // "languages": {
+      //   $size: 2,
+      //   $all: ["English", "Japanese"]
+      // }
+    }
+  }
+]
+
+db.movies.aggregate(pipeline).itcount()
