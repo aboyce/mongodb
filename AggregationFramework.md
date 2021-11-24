@@ -20,6 +20,14 @@ A `$match` stage may contain an `$text` query operator but it must be the first 
 
 You cannot use a `$where` in a `$match`.
 
+### Shaping Documents with `$project`
+
+You can use `$project` to selectively retain and remove fields, you can reassign existing field values and derive entirely new fields. It can be used as many times as required within a pipeline.
+
+Where `$match` is like a `.filter()`, `$project` is like a `.map()`.
+
+You can remove with a `0` and retain with a `1`, when you specify a value to retain you must then specify each value you wish to retain. The `_id` field is the only field that you must explicitly remove.
+
 ### Grouping
 
 The aggregation framework exposes the `$group` operator that takes the incoming stream of data, and siphons it into multiple distinct reservoirs.
