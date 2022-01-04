@@ -28,6 +28,34 @@ Where `$match` is like a `.filter()`, `$project` is like a `.map()`.
 
 You can remove with a `0` and retain with a `1`, when you specify a value to retain you must then specify each value you wish to retain. The `_id` field is the only field that you must explicitly remove.
 
+### Using `$addFields` alongside `$project`
+
+It is very similar to `$project` with one key difference, it adds fields to a document. With `$project` we can selectively remove and retain fields, `$addFields` only allows you to modify the incoming pipeline documents with new computed fields or to modify existing fields.
+
+It can be a bit tedious to use `$project` to constantly declare which fields you want to include.
+
+### Working with GeoJSON
+
+To perform geo queries within the aggregation pipeline you can use `$geoNear`. It must be the first stage within a pipeline and have only one geo index.
+
+`$geoNear` can be used on sharded collections where `$near` cannot.
+
+An example of using `$geoNear` could be:
+
+```javascript
+$geoNear: {
+  near: { type: "Point", coordinates: [-67.89, 45.67] },
+  distanceField: "distanceFromQuery",
+  spherical: true
+}
+```
+
+You can add optional arguments to refine the query:
+
+- `minDistance` (in meters)
+- `maxDistance` (in meters)
+- `query` general query against documents
+
 ### Grouping
 
 The aggregation framework exposes the `$group` operator that takes the incoming stream of data, and siphons it into multiple distinct reservoirs.
@@ -50,3 +78,18 @@ Example syntax for these are:
 ```
 db.collection.find().sort({ "field_1": 1, "field_2": -1 }).limit(10)
 ```
+
+### Cursor-like Stages
+
+These are also available as an pipeline stage, they are:
+
+- sort - `{ $sort: { fieldOne: 1, fieldTwo: -1 } }`
+- skip - `{ $skip: 10 }`
+- limit - `{ $limit: 100 }`
+- count - `{ $count: "nameOfCountField" }`
+
+If a `sort` stage is before an `project`, `unwind`, or `group` it can take advantages of our indexes, otherwise it will be in-memory. By default, sort operations are limited to 100MB of RAM, to allow larger datasets you can provide `{ allowDiskUse: true }` as an aggregation argument.
+
+### `$sample`
+
+It will select a random set of documents from a collection, for example: `{ $sample: { size: 100 } }`
