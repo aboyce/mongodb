@@ -2,7 +2,7 @@
 
 A way of distributing data across multiple machines, used to support deployments with very large data sets and hight throughput operations. This is required when the capacity of a single sever can be overwhelmed.
 
-MongoDB supports horizontal scaling through sharding, it shards at the collection lever, distributing data across the sharded in the cluster.
+MongoDB supports horizontal scaling through sharding, it shards at the collection layer, distributing data across the sharded in the cluster.
 
 A sharded cluster consists of:
 
@@ -36,7 +36,7 @@ When it is tasked with a query that spreads multiple shards, it will open a curs
 
 Store metadata and configuration for the cluster, this data is required to be highly available and required frequently by `monogos`. To ensure availability, we deploy a Config Server Replica Set.
 
-These keep track of mappings from which data is available from with which area of the shard, this can simply be letters A-M are on shard 0 for example. They are also responsible for moving the data around, if the section of names A-M is too large compared to the other shards, it will change the mappings/locations to spread the data out more evenly. THey would update the metadata locally and then send this information out to the correct shards.
+These keep track of mappings from which data is available from with which area of the shard, this can simply be letters A-M are on shard 0 for example. They are also responsible for moving the data around, if the section of names A-M is too large compared to the other shards, it will change the mappings/locations to spread the data out more evenly. They would update the metadata locally and then send this information out to the correct shards.
 
 ##### Config Database
 
@@ -71,7 +71,7 @@ db.chunks.findOne()
 
 A chunks lower bound is inclusive where the upper bound is exclusive.
 
-When a collection is sharded with documents it is immediately defined with one chunk, this initial chunk goes from min key to max key. The different values the shard key may hold is called the key space of the sharded collection. As time progresses, the cluster will separate that initial chunk in to several others to allow data to be evenly distributed between shards, all documents of the same chunk live in the same shard.
+When a collection is sharded with documents it is immediately defined with one chunk, this initial chunk goes from min key to max key. The different values the shard key may hold is called the key space of the sharded collection. As time progresses, the cluster will separate that initial chunk into several others to allow data to be evenly distributed between shards, all documents of the same chunk live in the same shard.
 
 By default, MongoDB takes 64MB as the default chunk size, so if a chunk approaches that size it will be split. You can define the chunk size between 1MB and 1024MB, it can be changed at runtime.
 
@@ -101,17 +101,17 @@ You can enable sharding with `sh.enableSharding(database)` for a specific databa
 
 ### Shard Keys
 
-The shard key is used to distribute the collection's documents across sharded, it is the indexed field or fields to partition data in a sharded collection and to distribute it across the shards in the cluster.
+The shard key is used to distribute the collection's documents across shards, it is the indexed field or fields to partition data in a sharded collection and to distribute it across the shards in the cluster.
 
-MongoDB uses the shard key to separate the documents into logical groupings that MongoDB can then distribute. These groups are called **Chunks**. Because the shard key is used to chunk the documents, it must be present in every document.
+MongoDB uses the shard key to separate the documents into logical groupings that MongoDB can then distribute. These groups are called **Chunks**, because the shard key is used to chunk the documents, it must be present in every document.
 
-If you provide the shard key are part of your read query, MongoDB can direct that read request to a specific server in the cluster. Ideally you shard keys should cover the majority of the queries you run on that collection, if not every single node in the cluster will have to be queried.
+If you provide the shard key are part of your read query, MongoDB can direct that read request to a specific server in the cluster. Ideally your shard keys should cover the majority of the queries you run on that collection, if not every single node in the cluster will have to be queried.
 
 _In v4.4 documents can miss the shard key fields._
 
 You select the shard key when sharding a collection.
 
-_In v5 you can reshard a collection by changing the key, ing v4.4 you can refine a shard key by adding a suffix field(s) to the existing key._
+_In v5 you can reshard a collection by changing the key, in v4.4 you can refine a shard key by adding a suffix field(s) to the existing key._
 
 A document's shard key determines its distribution across the shards.
 
@@ -132,7 +132,7 @@ To shard a populated collection, the collection must have an index that starts w
 
 #### Shard Key Strategy
 
-The choice of key affect performance, efficiency and scalability of a sharded cluster. It can even be a bottleneck on performant hardware and can affect the sharding strategy you cluster can use.
+The choice of key affect performance, efficiency and scalability of a sharded cluster. It can even be a bottleneck on performant hardware and can affect the sharding strategy your cluster can use.
 
 The goal is a shard key whose values provide good write distribution:
 
@@ -152,11 +152,11 @@ Read isolation should also be considered, if your query can include the shard ke
 
 #### Read/writes
 
-Requests are distributed across the shards, so each shard processes a subset of cluster operations. You can horizontally scale across the cluster by adding more shards. Queries that include the shard key or prefix of a compound shard key, `mongos` can target the query at a specific shard or set of shards in a targeted operation.
+Requests are distributed across the shards, so each shard processes a subset of cluster operations. You can horizontally scale across the cluster by adding more shards. Queries that include the shard key or prefix of a compound shard key can be targeted by `mongos` at a specific shard or set of shards in a targeted operation.
 
 #### Storage Capacity
 
-Each shard contains a subset of the total cluster data, so less to handle. As the data grows more shards can be added to increase the storage capacity.
+Each shard contains a subset of the total cluster data, so less to handle. As the data grows, more shards can be added to increase the storage capacity.
 
 #### High Availability
 
@@ -164,7 +164,7 @@ Config servers and shards as replica sets provide increased availability. If a s
 
 ### Considerations
 
-Sharded clusters and more complex and require more maintenance, planning and execution.
+Sharded clusters are more complex and require more maintenance, planning and execution.
 
 Once sharded, there is no method to unshard a collection.
 

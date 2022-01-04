@@ -1,18 +1,18 @@
 ## CRUD
 
-All documents must have a unique identifier/`_id` field, all other fields could be identical, `_id` does not have to have the type `ObjectId()` though, as long as it is unique. `Object()` is the default type.
+All documents must have a unique identifier/`_id` field, all other fields could be identical, `_id` does not have to have the type `ObjectId()` though, as long as it is unique. `ObjectId()` is the default type.
 
 One:
 
-- `deleteOne()`
-- `updateOne()`
 - `findOne()`
+- `updateOne()`
+- `deleteOne()`
 
 Many:
 
-- `deleteMany()`
-- `updateMany()`
 - `find()`
+- `updateMany()`
+- `deleteMany()`
 
 ### Creating/Inserting
 

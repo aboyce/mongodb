@@ -7,7 +7,7 @@ Denotes the use of an operator, or addresses the field value (like a pointer).
 ### Comparison Operators
 
 - `$eq` - equal to
-- `$ne` - no equal to
+- `$ne` - not equal to
 - `$gt` - greater than
 - `$lt` - less than
 - `$gte` - greater than or equal to

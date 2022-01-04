@@ -8,11 +8,11 @@ MongoDB supports four different authentication methods.
 
 This is the default and most basic form of authentication.
 
-Stands for Salted, Challenge, Respond, Authentication Mechanism, with the important part being challenge and response (aka username and password)
+Stands for Salted, Challenge, Respond, Authentication Mechanism, with the important part being challenge and response (a.k.a username and password)
 
 #### X.509
 
-Uses an X.509 certificate for authentication, this is a more secure although more complex to setup method of authentication.
+Uses an X.509 certificate for authentication, this is more secure although more complex to setup method of authentication.
 
 #### LDAP (Lightweight Directory Access Protocol) - Enterprise Edition Only
 

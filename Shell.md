@@ -22,7 +22,7 @@ Depending on the use case, i.e. creating DB backups or exporting in a human read
 
 #### JSON
 
-`mongoexport` will export the data in JSON (or CSV) format and can be reimported with `mongoimport`. By default it will just output to the stout, if you want to store the output as JSON you can provide a `o` flag with the json filename.
+`mongoexport` will export the data in JSON (or CSV) format and can be reimported with `mongoimport`. By default it will just output to the `stout`, if you want to store the output as JSON you can provide a `o` flag with the json filename.
 
 #### BSON
 
@@ -37,7 +37,7 @@ Database commands provide the foundation for interacting with MongoDB, use `db.r
 There are shell helpers to interact with specific parts of MongoDB.
 
 - `db.<method>()` - interact with the database
-  - `db.<collection>.method()` - collection level operations
+- `db.<collection>.method()` - collection level operations
 - `rs.<method>()` - replica set deployment and management
 - `sh.<method>()` - shared cluster deployment and management
 

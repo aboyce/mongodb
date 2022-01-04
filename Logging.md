@@ -4,7 +4,7 @@ There are two logging facilities for tracking activities on the database.
 
 ### Process Log
 
-Displays activity on the MongoDB instance, it collections activity into one of the following:
+Displays activity on the MongoDB instance, it categorises activity into one of the following:
 
 - `ACCESS`: messages related to access control, such as authentication
 - `COMMAND`: messages related to database commands

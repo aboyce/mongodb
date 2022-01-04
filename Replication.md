@@ -47,7 +47,7 @@ The protocol under the hood of the replication, the TLDR is:
 
 - if a split happens a new election term starts
 - a split without a majority will not be able to confirm requests
-- when they rejoin the majority (with an assumed new leader) the previous leader will recognise that its term is no longer the latest and start following again
+- when they rejoin the majority (with an assumed new leader) the previous leader will recognise that it's term is no longer the latest and start following again
 
 #### Elections
 
@@ -93,7 +93,7 @@ Write concern levels:
 - `0` - don't wait for an acknowledgement
 - `1` (default) - wait for an acknowledgement from the primary only
 - `>=2` - wait for acknowledgement from the primary and one or more secondaries
-- `majority` - wait for acknowledgement from the majority of the replica set members (a simple majority, device the number of replicas by 2 and round up)
+- `majority` - wait for acknowledgement from the majority of the replica set members (a simple majority, divide the number of replicas by 2 and round up)
 
 Write concern options:
 
@@ -115,7 +115,7 @@ Read concern levels:
 - `local` - return the most recent data in the cluster, anything written to the primary can be classed as local
 - `available` - the same as `local` read concerns in replica sets but special for sharded deployments (this is the default for read operations against secondaries)
 - `majority` - only returns data that has been acknowledged by a majority of nodes in the replica set (the only way data could be lost here would be if a majority of replica set members went down and the data had not been replicated to the remaining replica set members, very unlikely)
-- `linearizable` - this is an extension to `majority` in that it provides ready your own write functionality (this is best if you want the combination of fast but safe data), it has the strongest durability guarantees
+- `linearizable` - this is an extension to `majority` in that it provides read your own write functionality (this is best if you want the combination of fast but safe data), it has the strongest durability guarantees
 
 ### Read Preferences
 

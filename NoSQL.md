@@ -35,7 +35,7 @@ The primary key gets you a blob of information. The system can know which server
 
 #### Graph
 
-Useful for when relationships occur within tables rather than across tables. These
+Useful for when relationships occur within tables rather than across tables.
 
 #### Column (Wide Column Stores)
 
