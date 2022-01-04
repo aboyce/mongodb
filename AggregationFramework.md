@@ -60,6 +60,40 @@ You can add optional arguments to refine the query:
 
 The aggregation framework exposes the `$group` operator that takes the incoming stream of data, and siphons it into multiple distinct reservoirs.
 
+The required parameter is the `_id` field which is the criteria the group stage uses to categorise and bundle documents together.
+
+Grouping on just one expression is functionally equivalent to using the distinct command.
+
+You can use all accumulator expressions within `$group`.
+
+It can be used multiple times within a pipeline.
+
+It may be necessary to sanitise incoming data to ensure missing or differently typed values do not mess up the calculations.
+
+Each time group categorises a document the sum express gets called, we can use this to find out how many documents belong to each group. For each match, it will add the value we provide to `$sum`, for example:
+
+```
+{
+  $group: {
+    _id: '$year',
+    count_per_year: { $sum: 1 }
+  }
+}
+```
+
+### Accumulator Stages
+
+Accumulator expressions in `$project` operate over an array in the current document, they do not carry values over all documents, they have no memory between documents.
+
+May still have to use `$reduce` or `$map` for more complex calculations.
+
+- `$sum`
+- `$avg`
+- `$max`
+- `$min`
+- `$stdDevPop` (all documents)
+- `$stdDevSamp` (sample of documents)
+
 ### Cursor Methods
 
 Some cursor methods are:
