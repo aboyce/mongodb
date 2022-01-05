@@ -56,7 +56,7 @@ You can add optional arguments to refine the query:
 - `maxDistance` (in meters)
 - `query` general query against documents
 
-### Grouping
+### Group Stage
 
 The aggregation framework exposes the `$group` operator that takes the incoming stream of data, and siphons it into multiple distinct reservoirs.
 
@@ -93,6 +93,14 @@ May still have to use `$reduce` or `$map` for more complex calculations.
 - `$min`
 - `$stdDevPop` (all documents)
 - `$stdDevSamp` (sample of documents)
+
+### Unwind Stage
+
+The `$unwind` stage lists unwind in an array field, creating a new document for every entry where the field value is now each entry.
+
+As an example, if you had a document with fields `one`, `two`, and an array field of `three`, after the unwind you would have documents with `one`, `two`, and `three` where `three` is a single field from the array with all of the original fields.
+
+Using unwind on large collections and big documents can exceed memory usage, use matching and projection to get this down and only work on the data we need to, you can use the disk if required though.
 
 ### Cursor Methods
 
