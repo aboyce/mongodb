@@ -114,6 +114,28 @@ Any matches will appear as a nested array field on the source collection, if the
 
 It will retrieve the entire document that matched, not just the `foreignField`.
 
+### Redact State
+
+The redact stage help to protect information from unauthorised access. It is not for restricting access to a collection, only the documents within. To perform this redaction stage the user will already have read access, so should not be used for implementing access control.
+
+If comparing to a field in the document, the field must be present at every level if using descend or the redaction is likely to error.
+
+The document can be made up of sub documents, if deemed to be redacted, it will apply to that document level and those beneath it. It will traverse the document and make the decision at each level on the `$cond`, it will keep going until it hits a prune and to the user this document will not exist at all.
+
+It takes an expression that resolves to one of three values;
+
+#### `$$DESCEND`
+
+Retains the field at the current document level being evaluated except for sub documents and arrays of documents and progresses to the next level down to evaluate.
+
+#### `$$PRUNE`
+
+Remove all fields at the current document level without further inspection (including sub documents), the inverse of `$$KEEP`.
+
+#### `$$KEEP`
+
+Retain all fields at the current document level without further inspection (including sub documents), the inverse of `$$PRUNE`.
+
 ### Graph Lookup Stage
 
 Some more complex data structures can be graph or tree hierarchies, an example could be an organisational chart, and these require specific lookups.
