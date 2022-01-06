@@ -136,6 +136,16 @@ Remove all fields at the current document level without further inspection (incl
 
 Retain all fields at the current document level without further inspection (including sub documents), the inverse of `$$PRUNE`.
 
+### Out Stage
+
+The `$out` stage must be the last stage in the pipeline, because of this it cannot be used within a `$facet` stage.
+
+It will create a collection with the name specified if it does not exist or will overwrite an existing collection if it does. If it does overwrite a collection, any existing indexes will stay in place, this means the output must honour index restrictions.
+
+You can only create the new collection within the same database.
+
+Will not output to the collection if the pipeline errors.
+
 ### Graph Lookup Stage
 
 Some more complex data structures can be graph or tree hierarchies, an example could be an organisational chart, and these require specific lookups.
