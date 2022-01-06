@@ -146,6 +146,28 @@ You can only create the new collection within the same database.
 
 Will not output to the collection if the pipeline errors.
 
+### Merge Stage
+
+This builds on the `$out` stage by adding more flexibility, you can use it to merge output into a collection, that collection can be in a different database, and it can also be sharded.
+
+You can specify the fields on which to match the documents using the `on` argument. If not specified, it will use the `_id` field as the merging field when unsharded, if it is sharded, it will use a combination of the `_id` and the shard key. If you specify your own merging key, there must be a unique index on it.
+
+As part of the merge process there are two fields, `whenNotMatched` and `whenMatched` to specify how the merge should take place. These are optional. By default, no match will result in an insert, a match will result in a merge (adding top level fields, preserving existing).
+
+The options for `whenNotMatched` are:
+
+- `insert` - insert into the collection
+- `discard` - discard it (it may not be something that is wanted)
+- `fail` - fail the stage (you may be expecting a document to previous exist and a merge to take place)
+
+The options for `whenMatched` are:
+
+- `merge` - merge with the existing document
+- `replace` - replace the full document with the incoming document
+- `keepExisting` - if it is already there keep the existing document
+- `fail` - fail the stage (you may be expecting a document to not have existed)
+- You can also provide a custom pipeline to create the new document to be written to the collection. This is limited to stages that do single document transformations, they are applied to the existing document in the target collection. Any `$` variables refer to the existing document, but you can use `$$new.value` to refer to values in the incoming document. For example, `{ $set: { total: { $sum: [ "$total", "$$new.total" ] } } }` will add the existing total with the new total and set that to the merged document. You can use `$replaceWith` and `$mergeObjects` to manually create merging logic with custom overrides.
+
 ### Graph Lookup Stage
 
 Some more complex data structures can be graph or tree hierarchies, an example could be an organisational chart, and these require specific lookups.
