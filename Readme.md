@@ -22,6 +22,8 @@
 
 ### [Aggregation Framework](AggregationFramework.md)
 
+### [Views](Views.md)
+
 ### [Shell](Shell.md)
 
 ### [Logging](Logging.md)
