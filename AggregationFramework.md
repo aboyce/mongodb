@@ -102,6 +102,18 @@ As an example, if you had a document with fields `one`, `two`, and an array fiel
 
 Using unwind on large collections and big documents can exceed memory usage, use matching and projection to get this down and only work on the data we need to, you can use the disk if required though.
 
+### Lookup Stage
+
+The `$lookup` stage lets you combine information from two collections, effectively a left outer join in the SQL world. This is a combination of all document entries on the left with matching documents from the right.
+
+The collection you specify in the `from` field cannot be sharded and must exist in the same database.
+
+The fields `localField` and `foreignField` can bot resolve to either a single value or an array. They are matched on equality.
+
+Any matches will appear as a nested array field on the source collection, if there are no matches it will be an empty array. It is common to follow this stage with a match stage to filter out documents with no matches.
+
+It will retrieve the entire document that matched, not just the `foreignField`.
+
 ### Cursor Methods
 
 Some cursor methods are:
