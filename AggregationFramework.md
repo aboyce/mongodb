@@ -179,3 +179,80 @@ If a `sort` stage is before an `project`, `unwind`, or `group` it can take advan
 ### `$sample`
 
 It will select a random set of documents from a collection, for example: `{ $sample: { size: 100 } }`
+
+### Facets
+
+Facet navigation is often used for browsing data catalogs and grouping data into analytic use cases. They can be seen as filter categories, i.e. you could have people with a certain job title and then add a location facet to further limit though results.
+
+#### `$sortByCount`
+
+You can use `$sortByCount` to display the categories and the count of each of those. An example of this could be `[..., { $sortByCount: '$category' }]` to get a count of each of the categories.
+
+It works just like a `$group` stage followed immediately by a `$sort` in descending direction.
+
+#### Buckets
+
+Buckets are groups specified by a range of values, as opposed to individual values. For example:
+
+```
+{
+  $bucket: {
+    groupBy: '$employee_count',
+    boundaries: [0, 50, 100, 150, Infinity]
+  }
+}
+```
+
+The lower values are inclusive for their bucket, so for above it would be 0-49, 50-99, 100-149, 150-Infinity.
+
+If you have values that fall outside of the boundaries you specify, or have different data types to categorise, you will get an error. To avoid this, you can add a `default` value so that these can fall into this bucket.
+
+All values that define the boundaries need to have the same data type and you must always specify at least **2** values.
+
+If the default output of the `$bucket` stage is too minimal, you can use `output` to provide a structure of the results. This will remove the `count` that is provided by default.
+
+To avoid having to manually specifying the buckets, you can get MongoDB to automatically create the buckets for you with `$bucketAuto`. For example:
+
+```
+{
+  $bucketAuto: {
+    groupBy: '$employee_count',
+    buckets: 10
+  }
+}
+```
+
+For this the `_id` will be an object containing the `min` and `max` for each of the buckets, along with the `count` for each of them. MongoDB will try to evenly balance the number in each bucket.
+
+#### Multiple Buckets
+
+To combine multiple buckets, you can use the `$facet` stage. This allows you to provide a bucket for each object value. You provide a sub-pipeline for each facet/bucket, they will receive the same number as documents as the `$facet` stage itself but run independently of one another, the output of one sub-pipeline cannot be used by the following ones. For example:
+
+```
+{
+  $facet: {
+    firstBucketAbove: [
+      {
+        $match: { location: 'Here' }
+      },
+      {
+        $bucket: {
+          groupBy: '$employee_count',
+          boundaries: [0, 50, 100, 150, Infinity]
+        }
+      }
+    ],
+    secondBucketAbove: [
+      {
+        $match: { name: 'Value' }
+      },
+      {
+        $bucketAuto: {
+          groupBy: '$employee_count',
+          buckets: 10
+        }
+      }
+    ]
+  }
+}
+```
