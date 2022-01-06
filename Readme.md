@@ -22,6 +22,8 @@
 
 ### [Aggregation Framework](AggregationFramework.md)
 
+### [Aggregation Framework Performance](AggregationFrameworkPerformance.md)
+
 ### [Views](Views.md)
 
 ### [Shell](Shell.md)
