@@ -114,6 +114,38 @@ Any matches will appear as a nested array field on the source collection, if the
 
 It will retrieve the entire document that matched, not just the `foreignField`.
 
+### Graph Lookup Stage
+
+Some more complex data structures can be graph or tree hierarchies, an example could be an organisational chart, and these require specific lookups.
+
+The `$graphLookup` stage allow the combination of flexible datasets with graph or graph-like operations.
+
+In SQL this type of lookup is via recursive common table expressions.
+
+A graph lookup allows looking up recursively a set of documents with a defined relationship to a starting document, for example an employee to look at their management chain.
+
+It will default to a `maxDepth` of 0, i.e. the first layer of matches. If you are doing the lookup across collections you will have to increase the `maxDepth` by 1.
+
+You can use `depthField` to show how many levels away the matched document is to the original document.
+
+You can limit the recursive matches with `restrictSearchWithMatch` to avoid matching on everything.
+
+The steps of this stage are;
+
+1. Input documents flow into this stage
+2. It targets the search to the collection designated by the `from` parameter
+3. For each input document, the search begins with the `startWith` value
+4. It matches the `startWith` value against the field designated by `connectToField` from the `from` collection.
+5. For each matching document, it takes the value of the `connectedFromField` and checks every document in the `from` collection for a matching `connectToField` value. For each of these matches, it adds the matching document in the `from` collection to an array field specified via the `as` value.
+   This happens recursively until no more matches are found, or until the `maxDepth` value is reached.
+6. The array field is them added to the input document.
+
+Due to its recursive nature, you will have to consider the memory resources required. You can use `$allowDiskUse` to get around the default memory limitations. This though may not be enough with some complex queries.
+
+Having the `connectToField` indexed should help with performance.
+
+The `connectFromField` **cannot** be sharded.
+
 ### Cursor Methods
 
 Some cursor methods are:
