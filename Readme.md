@@ -1,37 +1,37 @@
 # MongoDB
 
-## Big Picture
+## Concepts
 
-### [NoSQL](NoSQL.md)
+### [NoSQL](./concepts/NoSQL.md)
 
-### [Architecture](Architecture.md)
+### [Architecture](./concepts/Architecture.md)
 
-### [Sharding](Sharding.md)
+### [Sharding](./concepts/Sharding.md)
 
-### [Replication](Replication.md)
+### [Replication](./concepts/Replication.md)
 
-### [Data Modelling](DataModelling.md)
+### [Data Modelling](./concepts/DataModelling.md)
 
 ## Specifics
 
-### [CRUD](CRUD.md)
+### [CRUD](./specifics/CRUD.md)
 
-### [Querying](Querying.md)
+### [Querying](./specifics/Querying.md)
 
-### [Indexes](Indexes.md)
+### [Indexes](./specifics/Indexes.md)
 
-### [Aggregation Framework](AggregationFramework.md)
+### [Aggregation Framework](./specifics/Aggregation%20Framework.md)
 
-### [Aggregation Framework Performance](AggregationFrameworkPerformance.md)
+### [Aggregation Framework Performance](./specifics/Aggregation%20Framework%20Performance.md)
 
-### [Views](Views.md)
+### [Views](./specifics/Views.md)
 
-### [Shell](Shell.md)
+### [Shell](./specifics/Shell.md)
 
-### [Logging](Logging.md)
+### [Logging](./specifics/Logging.md)
 
-### [Profiling](Profiling.md)
+### [Profiling](./specifics/Profiling.md)
 
-### [Monitoring and Debugging](MonitoringAndDebugging.md)
+### [Monitoring and Debugging](./specifics/Monitoring%20and%20Debugging.md)
 
-### [Security](Security.md)
+### [Security](./specifics/Security.md)
